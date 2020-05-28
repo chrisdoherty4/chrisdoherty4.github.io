@@ -3,7 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://chrisdoherty.io/categories/</loc>
+  </url>
+  
+  <url>
     <loc>http://chrisdoherty.io/</loc>
+  </url>
+  
+  <url>
+    <loc>http://chrisdoherty.io/page/about/</loc>
+  </url>
+  
+  <url>
+    <loc>http://chrisdoherty.io/page/</loc>
+  </url>
+  
+  <url>
+    <loc>http://chrisdoherty.io/posts/</loc>
   </url>
   
   <url>

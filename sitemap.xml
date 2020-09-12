@@ -3,27 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://chrisdoherty.io/categories/</loc>
+    <loc>https://chrisdoherty.io/categories/</loc>
   </url>
   
   <url>
-    <loc>http://chrisdoherty.io/</loc>
+    <loc>https://chrisdoherty.io/</loc>
   </url>
   
   <url>
-    <loc>http://chrisdoherty.io/page/about/</loc>
+    <loc>https://chrisdoherty.io/page/about/</loc>
   </url>
   
   <url>
-    <loc>http://chrisdoherty.io/page/</loc>
+    <loc>https://chrisdoherty.io/page/</loc>
   </url>
   
   <url>
-    <loc>http://chrisdoherty.io/posts/</loc>
+    <loc>https://chrisdoherty.io/posts/</loc>
   </url>
   
   <url>
-    <loc>http://chrisdoherty.io/tags/</loc>
+    <loc>https://chrisdoherty.io/tags/</loc>
   </url>
   
 </urlset>

@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Chris Doherty</title>
-    <link>http://chrisdoherty.io/tags/</link>
+    <link>https://chrisdoherty.io/tags/</link>
     <description>Recent content in Tags on Chris Doherty</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	<atom:link href="http://chrisdoherty.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chrisdoherty.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

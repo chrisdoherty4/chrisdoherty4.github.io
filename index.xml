@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chris Doherty</title>
-    <link>http://chrisdoherty.io/</link>
+    <link>https://chrisdoherty.io/</link>
     <description>Recent content on Chris Doherty</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	<atom:link href="http://chrisdoherty.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chrisdoherty.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hey, I&#39;m Chris</title>
-      <link>http://chrisdoherty.io/page/about/</link>
+      <link>https://chrisdoherty.io/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrisdoherty.io/page/about/</guid>
+      <guid>https://chrisdoherty.io/page/about/</guid>
       <description>Hey, I&amp;rsquo;m Chris and this is my blog where I talk about technical things and, from time to time, other stuff too.</description>
     </item>
     
     <item>
       <title>Posts</title>
-      <link>http://chrisdoherty.io/posts/</link>
+      <link>https://chrisdoherty.io/posts/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrisdoherty.io/posts/</guid>
+      <guid>https://chrisdoherty.io/posts/</guid>
       <description></description>
     </item>
     

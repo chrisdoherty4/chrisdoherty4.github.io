@@ -3,27 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://chrisdoherty4.github.io/categories/</loc>
+    <loc>https://chrisdoherty.io/categories/2020/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chrisdoherty4.github.io/</loc>
+    <loc>https://chrisdoherty.io/categories/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chrisdoherty4.github.io/page/about/</loc>
+    <loc>https://chrisdoherty.io/tags/go/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chrisdoherty4.github.io/page/</loc>
+    <loc>https://chrisdoherty.io/tags/go-slice/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chrisdoherty4.github.io/posts/</loc>
+    <loc>https://chrisdoherty.io/posts/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://chrisdoherty4.github.io/tags/</loc>
+    <loc>https://chrisdoherty.io/posts/preventing-unintended-shared-slice-overwrites/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrisdoherty.io/categories/programming/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrisdoherty.io/tags/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrisdoherty.io/</loc>
+    <lastmod>2020-09-19T14:44:37-06:00</lastmod>
   </url>
   
 </urlset>

@@ -4,20 +4,20 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Slices Go slices are small constructs backed by a traditional array. The slice construct is light weight because it contains only a pointer to it&rsquo;s first element, a length and a capacity. The slice pointer can point to any element in the backing array.
+<meta name="description" content="Slices #  Go slices are small constructs backed by a traditional array. The slice construct is light weight because it contains only a pointer to it&rsquo;s first element, a length and a capacity. The slice pointer can point to any element in the backing array.
 The length denotes the number of elements currently in the slice and the capactiy denotes the maximum number of elements allowed in the slice. Generally, the capacity of a slice is the size of the underlying array.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Preventing unintended overwrites with shared slices" />
-<meta property="og:description" content="Slices Go slices are small constructs backed by a traditional array. The slice construct is light weight because it contains only a pointer to it&rsquo;s first element, a length and a capacity. The slice pointer can point to any element in the backing array.
+<meta property="og:description" content="Slices #  Go slices are small constructs backed by a traditional array. The slice construct is light weight because it contains only a pointer to it&rsquo;s first element, a length and a capacity. The slice pointer can point to any element in the backing array.
 The length denotes the number of elements currently in the slice and the capactiy denotes the maximum number of elements allowed in the slice. Generally, the capacity of a slice is the size of the underlying array." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chrisdoherty.io/posts/preventing-unintended-shared-slice-overwrites/" />
+<meta property="og:url" content="https://chrisdoherty.io/2020/09/preventing-unintended-overwrites-with-shared-slices/" />
 <meta property="article:published_time" content="2020-09-19T09:51:23-06:00" />
-<meta property="article:modified_time" content="2020-09-19T12:01:05-06:00" />
+<meta property="article:modified_time" content="2020-09-19T17:18:09-06:00" />
 <title>Preventing unintended overwrites with shared slices | Chris Doherty</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/book.min.6cd8553a6854f4812343f0f0c8baca31271e686434f381fbe3c7226f66639176.css" integrity="sha256-bNhVOmhU9IEjQ/DwyLrKMSceaGQ084H748cib2ZjkXY=">
-<script defer src="/en.search.min.f55c19d312e4904af1d416ce75383df3f4f484ef95e4e2336be25fa28eacc329.js" integrity="sha256-9VwZ0xLkkErx1BbOdTg98/T0hO&#43;V5OIza&#43;Jfoo6swyk="></script>
+<script defer src="/en.search.min.744329f6026e1cd93d745d7f7aa9683f7a8505c8aa1b5d79d6723d6232edf6a2.js" integrity="sha256-dEMp9gJuHNk9dF1/eqloP3qFBciqG1151nI9YjLt9qI="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -75,15 +75,17 @@ https://github.com/alex-shpak/hugo-book
 <ul>
     
     <li>
-        <img src="/github/PNG/GitHub-Mark-32px.png" alt="Github Inc." />
-        <a href="https://github.com/chrisdoherty4" target="_blank"  rel="noopener">Github</a>
+        <a href="https://github.com/chrisdoherty4" target="_blank"  rel="noopener">
+            <img src="/github/GitHub-Mark-32px.png" alt="Github" width="25px" />
+        </a>
     </li>
     
 
     
     <li>
-        <img />
-        <a href="https://linkedin.com/in/chrisdoherty4" target="_blank"  rel="noopener">Linkedin</a>
+        <a href="https://linkedin.com/in/chrisdoherty4" target="_blank"  rel="noopener">
+            <img src="/linkedin/LI-In-Bug.png" alt="Linkedin" width="25px" />
+        </a>
     </li>
     
 </ul>
@@ -136,9 +138,13 @@ https://github.com/alex-shpak/hugo-book
 
       
       
+<p>
+  <a href="">&larr; Back</a>
+</p>
+
 <article class="markdown">
   <h1>
-    <a href="/posts/preventing-unintended-shared-slice-overwrites/">Preventing unintended overwrites with shared slices</a>
+    <a href="/2020/09/preventing-unintended-overwrites-with-shared-slices/">Preventing unintended overwrites with shared slices</a>
   </h1>
   
   <h5>September 19, 2020</h5>
@@ -162,10 +168,16 @@ https://github.com/alex-shpak/hugo-book
   
 
 
-  <p><h2 id="slices">Slices</h2>
+  <p><h2 id="slices">
+  Slices
+  <a class="anchor" href="#slices">#</a>
+</h2>
 <p>Go <em>slices</em> are small constructs backed by a traditional array. The slice construct is light weight because it contains only a pointer to it&rsquo;s <a href="https://github.com/golang/go/blob/master/src/runtime/slice.go#L13">first element, a length and a capacity</a>. The slice pointer can point to any element in the backing array.</p>
 <p>The length denotes the number of elements currently in the slice and the capactiy denotes the maximum number of elements allowed in the slice. Generally, the capacity of a slice is the size of the underlying array. When we add a new element to a slice that&rsquo;s reached it&rsquo;s capacity a new backing array is created that is typically <a href="https://github.com/golang/go/blob/master/src/runtime/slice.go#L146">twice the size</a> of the current capactiy.</p>
-<h2 id="passing-slices-around">Passing slices around</h2>
+<h2 id="passing-slices-around">
+  Passing slices around
+  <a class="anchor" href="#passing-slices-around">#</a>
+</h2>
 <p>When a slice is passed as a function argument or used as a return value it maintains a reference to the same backing array because the copy of a slice contains copies of the pointer, length and capactiy. Subsequently, changing an element in a slice causes all slices pointing to the same backing array to be updated.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">s</span> []<span style="color:#66d9ef">string</span>) {
     <span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#e6db74">&#34;Banana&#34;</span>
@@ -187,7 +199,10 @@ https://github.com/alex-shpak/hugo-book
     <span style="color:#75715e">// Origin slice inadvertently updated 
 </span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">originSlice</span>) <span style="color:#75715e">// {&#34;Tomato&#34;, &#34;Squash&#34;, &#34;Banana&#34;, &#34;Spinach&#34;}
 </span><span style="color:#75715e"></span>}
-</code></pre></div><h2 id="protecting-against-append-overwrites">Protecting against append overwrites</h2>
+</code></pre></div><h2 id="protecting-against-append-overwrites">
+  Protecting against append overwrites
+  <a class="anchor" href="#protecting-against-append-overwrites">#</a>
+</h2>
 <p>We can protect against <code>append(...)</code> specifically by explicitly setting the <code>newSlice</code> capacity to the same as the length using <code>newSlice := originSlice[startIndex:endIndexExclusive:expectedNewSliceLen]</code> syntax. When we try appending to the <code>newSlice</code> that has reached it&rsquo;s capacity Go creates a new backing array with increased capacity, copies the elements in <code>newSlice</code> to the new backing array and returns a new slice pointing to the new backing array.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
     <span style="color:#a6e22e">originSlice</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Tomato&#34;</span>, <span style="color:#e6db74">&#34;Squash&#34;</span>, <span style="color:#e6db74">&#34;Lettuce&#34;</span>, <span style="color:#e6db74">&#34;Spinach&#34;</span>}
@@ -213,7 +228,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <div><a class="flex align-center" href="https://github.com/chrisdoherty4/blog/commit/944a3de3992ceae73e85ca7dfb53c12944d78158" title='Last modified by Chris Doherty | September 19, 2020' target="_blank" rel="noopener">
+  <div><a class="flex align-center" href="https://github.com/chrisdoherty4/blog/commit/6e39e53b05b3b2459af7e05a8674d9923d009d1f" title='Last modified by Chris Doherty | September 19, 2020' target="_blank" rel="noopener">
       <img src="/svg/calendar.svg" class="book-icon" alt="Calendar" />
       <span>September 19, 2020</span>
     </a>

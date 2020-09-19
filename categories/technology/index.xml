@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Chris Doherty</title>
-    <link>https://chrisdoherty.io/posts/</link>
-    <description>Recent content in Posts on Chris Doherty</description>
+    <title>Technology on Chris Doherty</title>
+    <link>https://chrisdoherty.io/categories/technology/</link>
+    <description>Recent content in Technology on Chris Doherty</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://chrisdoherty.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Sep 2020 09:51:23 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Preventing unintended overwrites with shared slices</title>
       <link>https://chrisdoherty.io/2020/09/preventing-unintended-overwrites-with-shared-slices/</link>

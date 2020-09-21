@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>c on Chris Doherty</title>
+    <link>https://chrisdoherty.io/tags/c/</link>
+    <description>Recent content in c on Chris Doherty</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Jun 2020 17:39:28 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unsigned</title>
+      <link>https://chrisdoherty.io/2020/06/unsigned/</link>
+      <pubDate>Wed, 24 Jun 2020 17:39:28 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/06/unsigned/</guid>
+      <description>Using an unsigned instead of an int to gain one more bit to represent positive integers is almost never a good idea
+ - Bjarne Stroustrup
+Default representation #  It&amp;rsquo;s natural to think of integers in terms of signed types because they can represent negative values. In C/C++, integer literals, without any modifiers, are signed types.
+If done incorrectly, converting between signed and unsigned integers can be dangerous. Even when done correctly, if the program is working with a value that can&amp;rsquo;t be represented within the bounds of the target signedness the program experiences an error and that error must be dealt with.</description>
+    </item>
+    
+  </channel>
+</rss>

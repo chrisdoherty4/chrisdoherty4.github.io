@@ -9,7 +9,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://chrisdoherty.io/tags/programming/" />
-<meta property="og:updated_time" content="2020-09-20T21:01:21-06:00" />
+<meta property="og:updated_time" content="2020-09-20T21:02:59-06:00" />
 <title>programming | Chris Doherty</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -162,7 +162,7 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex justify-between">
           <a href="/tags/programming/">programming</a>
-          <span>2</span>
+          <span>3</span>
         </li>
       
         <li class="flex justify-between">
@@ -260,6 +260,37 @@ If done incorrectly, converting between signed and unsigned integers can be dang
     </p>
   </article>
   
+  <article class="markdown book-post">
+    <h2>
+      <a href="/2020/05/runtime.numcpu/">runtime.NumCPU</a>
+    </h2>
+    
+  <h5>May 22, 2020</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/programming/">Programming</a>, 
+      <a href="/categories/technology/">Technology</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/go/">go</a>, 
+      <a href="/tags/programming/">programming</a>
+  </div>
+  
+
+
+    <p>A number of books and articles I&rsquo;ve read recently claim that runtime.NumCPU() returns the physical processor count. This isn&rsquo;t accurate: runtime.NumCPU() has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?
+package main import ( &#34;runtime&#34; &#34;fmt&#34; ) func main() { fmt.Println(runtime.NumCPU()) } 
+    </p>
+  </article>
+  
 
   
 
@@ -325,7 +356,7 @@ If done incorrectly, converting between signed and unsigned integers can be dang
       
         <li class="flex justify-between">
           <a href="/tags/programming/">programming</a>
-          <span>2</span>
+          <span>3</span>
         </li>
       
         <li class="flex justify-between">

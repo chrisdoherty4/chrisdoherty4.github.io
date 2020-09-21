@@ -29,5 +29,15 @@ Default representation #  It&amp;rsquo;s natural to think of integers in terms o
 If done incorrectly, converting between signed and unsigned integers can be dangerous. Even when done correctly, if the program is working with a value that can&amp;rsquo;t be represented within the bounds of the target signedness the program experiences an error and that error must be dealt with.</description>
     </item>
     
+    <item>
+      <title>runtime.NumCPU</title>
+      <link>https://chrisdoherty.io/2020/05/runtime.numcpu/</link>
+      <pubDate>Fri, 22 May 2020 20:52:59 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/05/runtime.numcpu/</guid>
+      <description>A number of books and articles I&amp;rsquo;ve read recently claim that runtime.NumCPU() returns the physical processor count. This isn&amp;rsquo;t accurate: runtime.NumCPU() has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?
+package main import ( &amp;#34;runtime&amp;#34; &amp;#34;fmt&amp;#34; ) func main() { fmt.Println(runtime.NumCPU()) } </description>
+    </item>
+    
   </channel>
 </rss>

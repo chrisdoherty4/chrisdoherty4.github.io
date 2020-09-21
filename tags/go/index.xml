@@ -17,5 +17,14 @@
 The length denotes the number of elements currently in the slice and the capactiy denotes the maximum number of elements allowed in the slice. Generally, the capacity of a slice is the size of the underlying array.</description>
     </item>
     
+    <item>
+      <title>runtime.NumCPU</title>
+      <link>https://chrisdoherty.io/2020/05/runtime.numcpu/</link>
+      <pubDate>Fri, 22 May 2020 20:52:59 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/05/runtime.numcpu/</guid>
+      <description>A number of books and articles I&amp;rsquo;ve read recently claim that runtime.NumCPU() returns the physical processor count. This isn&amp;rsquo;t accurate: runtime.NumCPU() has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?</description>
+    </item>
+    
   </channel>
 </rss>

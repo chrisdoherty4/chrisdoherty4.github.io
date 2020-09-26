@@ -7,6 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://chrisdoherty.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Determining Endianness in Go</title>
+      <link>https://chrisdoherty.io/2020/09/determining-endianness-in-go/</link>
+      <pubDate>Sat, 26 Sep 2020 17:05:08 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/09/determining-endianness-in-go/</guid>
+      <description>In most languages you can do some variation of the same algorithm to determine endianness. The algorithm generally involves writing 0x0100 to a 16-bit integer and checking if the 0x01 or 0x00 byte was written at the first address.
+func Endian() string { var i int = 0x0100 ptr := unsafe.Pointer(&amp;amp;i) if 0x01 == *(*byte)(ptr) { return &amp;#34;Big Endian&amp;#34; } else if 0x00 == *(*byte)(ptr) { return &amp;#34;Little Endian&amp;#34; } else { return &amp;#34;Unknown&amp;#34; } } </description>
+    </item>
+    
+    <item>
       <title>Integer Conversion in Go</title>
       <link>https://chrisdoherty.io/2020/09/integer-conversion-in-go/</link>
       <pubDate>Sat, 26 Sep 2020 14:56:58 -0600</pubDate>

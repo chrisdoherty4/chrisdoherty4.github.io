@@ -6,7 +6,18 @@
     <description>Recent content in programming on Chris Doherty</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2020 09:51:23 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Sep 2020 14:56:58 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integer Conversion in Go</title>
+      <link>https://chrisdoherty.io/2020/09/integer-conversion-in-go/</link>
+      <pubDate>Sat, 26 Sep 2020 14:56:58 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/09/integer-conversion-in-go/</guid>
+      <description>Go&amp;rsquo;s integer type conversion behaves differently dependent on whether you&amp;rsquo;re declaring a variable and assigning a value to it or applying a type conversion to existing data.
+Declarig a variable and assigning a value outside the representable bounds of the variable type results in an error.
+// Fails because int8s bounds are -128 to 127 var i int8 = 128 Converting a data to a type with less bits resuts in data with the most significant bits being dropped.</description>
+    </item>
+    
     <item>
       <title>Preventing unintended overwrites with shared slices</title>
       <link>https://chrisdoherty.io/2020/09/preventing-unintended-overwrites-with-shared-slices/</link>

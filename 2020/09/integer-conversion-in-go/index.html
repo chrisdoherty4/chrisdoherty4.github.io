@@ -4,16 +4,18 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="A number of books and articles I&rsquo;ve read recently claim that runtime.NumCPU() returns the physical processor count. This isn&rsquo;t accurate: runtime.NumCPU() has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?
-package main import ( &#34;runtime&#34; &#34;fmt&#34; ) func main() { fmt.Println(runtime.NumCPU()) } ">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="runtime.NumCPU" />
-<meta property="og:description" content="A number of books and articles I&rsquo;ve read recently claim that runtime.NumCPU() returns the physical processor count. This isn&rsquo;t accurate: runtime.NumCPU() has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?
-package main import ( &#34;runtime&#34; &#34;fmt&#34; ) func main() { fmt.Println(runtime.NumCPU()) } " />
+<meta name="description" content="Go&rsquo;s integer type conversion behaves differently dependent on whether you&rsquo;re declaring a variable and assigning a value to it or applying a type conversion to existing data.
+Declarig a variable and assigning a value outside the representable bounds of the variable type results in an error.
+// Fails because int8s bounds are -128 to 127 var i int8 = 128 Converting a data to a type with less bits resuts in data with the most significant bits being dropped.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Integer Conversion in Go" />
+<meta property="og:description" content="Go&rsquo;s integer type conversion behaves differently dependent on whether you&rsquo;re declaring a variable and assigning a value to it or applying a type conversion to existing data.
+Declarig a variable and assigning a value outside the representable bounds of the variable type results in an error.
+// Fails because int8s bounds are -128 to 127 var i int8 = 128 Converting a data to a type with less bits resuts in data with the most significant bits being dropped." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chrisdoherty.io/2020/05/runtime.numcpu/" />
-<meta property="article:published_time" content="2020-05-22T20:52:59-06:00" />
+<meta property="og:url" content="https://chrisdoherty.io/2020/09/integer-conversion-in-go/" />
+<meta property="article:published_time" content="2020-09-26T14:56:58-06:00" />
 <meta property="article:modified_time" content="2020-09-26T16:33:19-06:00" />
-<title>runtime.NumCPU | Chris Doherty</title>
+<title>Integer Conversion in Go | Chris Doherty</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/book.min.6cd8553a6854f4812343f0f0c8baca31271e686434f381fbe3c7226f66639176.css" integrity="sha256-bNhVOmhU9IEjQ/DwyLrKMSceaGQ084H748cib2ZjkXY=">
@@ -117,7 +119,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <strong>runtime.NumCPU</strong>
+  <strong>Integer Conversion in Go</strong>
 
   <label for="toc-control">
     
@@ -142,16 +144,17 @@ https://github.com/alex-shpak/hugo-book
       
 <article class="markdown">
   <h1>
-    <a href="/2020/05/runtime.numcpu/">runtime.NumCPU</a>
+    <a href="/2020/09/integer-conversion-in-go/">Integer Conversion in Go</a>
   </h1>
   
-  <h5>May 22, 2020</h5>
+  <h5>September 26, 2020</h5>
 
 
 
   
   <div>
     
+      <a href="/categories/til/">TIL</a>, 
       <a href="/categories/programming/">Programming</a>
   </div>
   
@@ -159,24 +162,21 @@ https://github.com/alex-shpak/hugo-book
   
   <div>
     
-      <a href="/tags/go/">go</a>, 
-      <a href="/tags/programming/">programming</a>
+      <a href="/tags/programming/">programming</a>, 
+      <a href="/tags/go/">go</a>
   </div>
   
 
 
-  <p><p>A number of books and articles I&rsquo;ve read recently claim that <a href="https://golang.org/pkg/runtime/#NumCPU"><code>runtime.NumCPU()</code></a> returns the physical processor count. This isn&rsquo;t accurate: <code>runtime.NumCPU()</code> has always returned the logical processor count. Perhaps the authors use the terms physical and logical interchangably given most/all mainstream processors have simaltaneous multithreading technology?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+  <p><p>Go&rsquo;s integer type conversion behaves differently dependent on whether you&rsquo;re declaring a variable and assigning a value to it or applying a type conversion to existing data.</p>
+<p>Declarig a variable and assigning a value outside the representable bounds of the variable type results in an error.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Fails because int8s bounds are -128 to 127
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int8</span> = <span style="color:#ae81ff">128</span>
+</code></pre></div><p>Converting a data to a type with less bits resuts in data with the most significant bits being dropped.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int16</span> = <span style="color:#ae81ff">0x0100</span>
 
-<span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;runtime&#34;</span>
-    <span style="color:#e6db74">&#34;fmt&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumCPU</span>())
-}
-</code></pre></div></p>
+<span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> int8(<span style="color:#a6e22e">i</span>) <span style="color:#75715e">// 0x00 as the most significant bits in i are dropped.
+</span></code></pre></div></p>
 </article>
  
       

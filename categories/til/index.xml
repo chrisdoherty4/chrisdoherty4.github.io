@@ -15,7 +15,7 @@
       <guid>https://chrisdoherty.io/2020/09/integer-conversion-in-go/</guid>
       <description>Go&amp;rsquo;s integer type conversion behaves differently dependent on whether you&amp;rsquo;re declaring a variable and assigning a value to it or applying a type conversion to existing data.
 Declarig a variable and assigning a value outside the representable bounds of the variable type results in an error.
-// Fails because int8s bounds are -128 to 127 var i int8 = 128 Converting a data to a type with less bits resuts in data with the most significant bits being dropped.</description>
+// Fails because int8s bounds are -128 to 127 var i int8 = 128 var j int16 = 128 var k int8 = j // Fails because j was declared as in8.</description>
     </item>
     
   </channel>

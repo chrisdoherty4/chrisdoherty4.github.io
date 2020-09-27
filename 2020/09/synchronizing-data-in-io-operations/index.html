@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="When reading and writing data using a command such as dd, Linux can read data in larger chunks than requested buffering it in memory. The buffer is known as the dirty cache and can be controlled using the dirty_* parameters defined in the Linux sysctl vm documentation.
+Dependent on the dirty_* configuration, the amount of dirty cache data can grow quite large. For example, if you have a large amount of memory and the dirty_background_ratio and or dirty_ratio parameters are set your dirty cache will be quite large.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Synchronizing Data in Io Operations" />
+<meta property="og:description" content="When reading and writing data using a command such as dd, Linux can read data in larger chunks than requested buffering it in memory. The buffer is known as the dirty cache and can be controlled using the dirty_* parameters defined in the Linux sysctl vm documentation.
+Dependent on the dirty_* configuration, the amount of dirty cache data can grow quite large. For example, if you have a large amount of memory and the dirty_background_ratio and or dirty_ratio parameters are set your dirty cache will be quite large." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chrisdoherty.io/2020/09/synchronizing-data-in-io-operations/" />
+<meta property="article:published_time" content="2020-09-27T12:33:53-06:00" />
+<meta property="article:modified_time" content="2020-09-27T15:15:52-06:00" />
+<title>Synchronizing Data in Io Operations | Chris Doherty</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.6cd8553a6854f4812343f0f0c8baca31271e686434f381fbe3c7226f66639176.css" integrity="sha256-bNhVOmhU9IEjQ/DwyLrKMSceaGQ084H748cib2ZjkXY=">
+<script defer src="/en.search.min.e48cf67f54bfb20a15fbec0cbc4c090fb9e7dd3f57635b3444ca9b4b7d05522b.js" integrity="sha256-5Iz2f1S/sgoV&#43;&#43;wMvEwJD7nn3T9XY1s0RMqbS30FUis="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><span>Chris Doherty</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+    <p>
+    
+    <a href="https://github.com/chrisdoherty4" target="_blank"  rel="noopener">
+        <img src="/github/GitHub-Mark-32px.png" alt="Github" width="25px" />
+    </a>
+    
+
+    
+    <a href="https://linkedin.com/in/chrisdoherty4" target="_blank"  rel="noopener">
+        <img src="/linkedin/LI-In-Bug.png" alt="Linkedin" width="25px" />
+    </a>
+    
+    </p>
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Synchronizing Data in Io Operations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#an-hypothetical-example-of-a-hanging-process">An hypothetical example of a hanging process</a></li>
+    <li><a href="#inspecting-the-dirty-cache">Inspecting the dirty cache</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/2020/09/synchronizing-data-in-io-operations/">Synchronizing Data in Io Operations</a>
+  </h1>
+  
+  <h5>September 27, 2020</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/linux/">Linux</a>, 
+      <a href="/categories/til/">TIL</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/io/">io</a>, 
+      <a href="/tags/linux/">linux</a>
+  </div>
+  
+
+
+  <p><p>When reading and writing data using a command such as <code>dd</code>, Linux can read data in larger chunks than requested buffering it in memory. The buffer is known as the <em>dirty cache</em> and can be controlled using the <code>dirty_*</code> parameters defined in the Linux <a href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">sysctl vm documentation</a>.</p>
+<p>Dependent on the <code>dirty_*</code> configuration, the amount of dirty cache data can grow quite large. For example, if you have a large amount of memory and the <code>dirty_background_ratio</code> and or <code>dirty_ratio</code> parameters are set your dirty cache will be quite large. A consequence of a large dirty cache is that commands that block until the buffer is flushed appear to be hanging for substantial periods of time as Linux has read lots of data into the dirty cache and is in the process of writing the data out.</p>
+<h2 id="an-hypothetical-example-of-a-hanging-process">
+  An hypothetical example of a hanging process
+  <a class="anchor" href="#an-hypothetical-example-of-a-hanging-process">#</a>
+</h2>
+<p>You want to <code>dd</code> a 5GB file onto a USB stick from an SSD using USB 2.0. You have 32GB of RAM and a 10% ratio setting resulting in a dirty cache size of 3.2GB. Finally, you specify a <code>bs=4M</code> limit on the <code>dd</code> command limiting read and write operations to 4MB at a time.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>./5gb-file.iso of<span style="color:#f92672">=</span>/dev/sda bs<span style="color:#f92672">=</span>4M
+</code></pre></div><p>As noted above, Linux may read data in larger chunks than specified and store the data in the dirty cache. Linux may read the 5GB file in larger chunks than 4MB at a time resulting in the dirty cache becoming full extremely quickly. However, USB2.0 has a write limit of 9.5MB/s resulting in a bottleneck. After the <code>dd</code> command finishs reading all data filling up the dirty cache it appears to hang.</p>
+<h2 id="inspecting-the-dirty-cache">
+  Inspecting the dirty cache
+  <a class="anchor" href="#inspecting-the-dirty-cache">#</a>
+</h2>
+<p>If we aren&rsquo;t performing any other extensive write operations we can inspect the dirty cache for the amount of data left to write.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cat /proc/meminfo  | grep Dirty | cut -d: -f2 | sed  <span style="color:#e6db74">&#34;s/^[[:space:]]*//&#34;</span>
+</code></pre></div><p>Retrieve your dirty cache settings with the following.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sysctl -a -r <span style="color:#e6db74">&#34;^vm\.dirty.*&#34;</span>
+</code></pre></div></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+  <div><a class="flex align-center" href="https://github.com/chrisdoherty4/blog/commit/a1ac4f6ea1f63b1803e598d4f93cfea2d230505b" title='Last modified by Chris Doherty | September 27, 2020' target="_blank" rel="noopener">
+      <img src="/svg/calendar.svg" class="book-icon" alt="Calendar" />
+      <span>September 27, 2020</span>
+    </a>
+  </div>
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#an-hypothetical-example-of-a-hanging-process">An hypothetical example of a hanging process</a></li>
+    <li><a href="#inspecting-the-dirty-cache">Inspecting the dirty cache</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

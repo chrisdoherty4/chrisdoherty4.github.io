@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Chris Doherty</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2020 10:01:08 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Sep 2020 12:33:53 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>io</title>
+      <link>https://chrisdoherty.io/tags/io/</link>
+      <pubDate>Sun, 27 Sep 2020 12:33:53 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/tags/io/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://chrisdoherty.io/tags/linux/</link>
+      <pubDate>Sun, 27 Sep 2020 12:33:53 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>go</title>
       <link>https://chrisdoherty.io/tags/go/</link>

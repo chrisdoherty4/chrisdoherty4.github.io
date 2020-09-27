@@ -7,6 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://chrisdoherty.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Releasing Go Modules</title>
+      <link>https://chrisdoherty.io/2020/09/releasing-go-modules/</link>
+      <pubDate>Sun, 27 Sep 2020 10:01:08 -0600</pubDate>
+      
+      <guid>https://chrisdoherty.io/2020/09/releasing-go-modules/</guid>
+      <description>There are 2 main methods for releasing Go modules: Copying all sources to a version directory in the root of the repository or creating a version branch. I don&amp;rsquo;t like copying my full source to a subdirectory so I&amp;rsquo;m focusing this article on creating a version branch which is a common approach for releasing software.
+Prelude: Semantic Import Versioning #  Go uses semantic versioning (semver) for dependency management. Additionally, Go has a simple rule when importing packages.</description>
+    </item>
+    
+    <item>
       <title>Determining Endianness in Go</title>
       <link>https://chrisdoherty.io/2020/09/determining-endianness-in-go/</link>
       <pubDate>Sat, 26 Sep 2020 17:05:08 -0600</pubDate>

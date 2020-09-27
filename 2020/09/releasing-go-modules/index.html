@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="There are 2 main methods for releasing Go modules: Copying all sources to a version directory in the root of the repository or creating a version branch. I don&rsquo;t like copying my full source to a subdirectory so I&rsquo;m focusing this article on creating a version branch which is a common approach for releasing software.
+Prelude: Semantic Import Versioning #  Go uses semantic versioning (semver) for dependency management. Additionally, Go has a simple rule when importing packages.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Releasing Go Modules" />
+<meta property="og:description" content="There are 2 main methods for releasing Go modules: Copying all sources to a version directory in the root of the repository or creating a version branch. I don&rsquo;t like copying my full source to a subdirectory so I&rsquo;m focusing this article on creating a version branch which is a common approach for releasing software.
+Prelude: Semantic Import Versioning #  Go uses semantic versioning (semver) for dependency management. Additionally, Go has a simple rule when importing packages." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chrisdoherty.io/2020/09/releasing-go-modules/" />
+<meta property="article:published_time" content="2020-09-27T10:01:08-06:00" />
+<meta property="article:modified_time" content="2020-09-27T11:05:58-06:00" />
+<title>Releasing Go Modules | Chris Doherty</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.6cd8553a6854f4812343f0f0c8baca31271e686434f381fbe3c7226f66639176.css" integrity="sha256-bNhVOmhU9IEjQ/DwyLrKMSceaGQ084H748cib2ZjkXY=">
+<script defer src="/en.search.min.4e4a981d709dc054cfeafe05e2f5a7079c29b0743fb4d9a472620585411bce35.js" integrity="sha256-TkqYHXCdwFTP6v4F4vWnB5wpsHQ/tNmkcmIFhUEbzjU="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><span>Chris Doherty</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+    <p>
+    
+    <a href="https://github.com/chrisdoherty4" target="_blank"  rel="noopener">
+        <img src="/github/GitHub-Mark-32px.png" alt="Github" width="25px" />
+    </a>
+    
+
+    
+    <a href="https://linkedin.com/in/chrisdoherty4" target="_blank"  rel="noopener">
+        <img src="/linkedin/LI-In-Bug.png" alt="Linkedin" width="25px" />
+    </a>
+    
+    </p>
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Releasing Go Modules</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#prelude-semantic-import-versioning">Prelude: Semantic Import Versioning</a></li>
+    <li><a href="#releasing-a-go-module-with-branches">Releasing a Go module with branches</a>
+      <ul>
+        <li><a href="#v0">v0</a></li>
+        <li><a href="#v1">v1</a></li>
+        <li><a href="#v2-and-beyond">v2 and beyond</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/2020/09/releasing-go-modules/">Releasing Go Modules</a>
+  </h1>
+  
+  <h5>September 27, 2020</h5>
+
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/go/">go</a>, 
+      <a href="/tags/releasing/">releasing</a>
+  </div>
+  
+
+
+  <p><p>There are 2 main methods for releasing Go modules: Copying all sources to a version directory in the root of the repository <em>or</em> creating a version branch. I don&rsquo;t like copying my full source to a subdirectory so I&rsquo;m focusing this article on creating a version branch which is a common approach for releasing software.</p>
+<h2 id="prelude-semantic-import-versioning">
+  Prelude: Semantic Import Versioning
+  <a class="anchor" href="#prelude-semantic-import-versioning">#</a>
+</h2>
+<p>Go uses <a href="https://semver.org">semantic versioning</a> (semver) for dependency management. Additionally, Go has a simple rule when importing packages.</p>
+<blockquote>
+<p>If an old package and a new package have the same import path, the new package must be backwards compatible with the old package.</p>
+</blockquote>
+<p>Written from the point of view of a package maintainer.</p>
+<blockquote>
+<p>When I release a backwards incompatible change, I must ensure the import path is different from the previous major release.</p>
+</blockquote>
+<p>The change can be achieved with a v2 suffix on the import path defined in <code>go.mod</code> file.</p>
+<pre><code>module github.com/chrisdoherty4/greeter/v2
+</code></pre><p>This results in import paths for the v2 major release requiring the v2 suffix.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Version 0 or 1 import
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/chrisdoherty4/example&#34;</span>
+
+<span style="color:#75715e">// Version 2 import.
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">chrisdoherty4</span><span style="color:#f92672">/</span><span style="color:#a6e22e">example</span><span style="color:#f92672">/</span><span style="color:#a6e22e">v2</span>
+</code></pre></div><p><a href="#v1-no-prefix"></a> Note the suffix isn&rsquo;t required for v0 or v1 because many packages are not released beyond v1. For a complete answer see <a href="https://github.com/golang/go/issues/24301#issuecomment-371228664">Russ Cox&rsquo;s FAQ post</a>.</p>
+<h2 id="releasing-a-go-module-with-branches">
+  Releasing a Go module with branches
+  <a class="anchor" href="#releasing-a-go-module-with-branches">#</a>
+</h2>
+<p>When starting development we create a <code>go.mod</code> file with the v0/v1 module name.</p>
+<pre><code>module github.com/chrisdoherty4/greeter
+</code></pre><p>The Go tooling looks for the latest semantic version tag in the repository and checks that the requested module exists.</p>
+<p>If the repository is yet to be tagged, the Go tooling will pull the tip of the default branch.</p>
+<h3 id="v0">
+  v0
+  <a class="anchor" href="#v0">#</a>
+</h3>
+<p>Until we&rsquo;re ready for our first release, v0, Go will pull the tip of the default branch.</p>
+<blockquote>
+<p>Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.</p>
+</blockquote>
+<p><em>- <a href="https://semver.org/#spec-item-4">semver item 4</a></em></p>
+<p>Given v0 is considered unstable, and that the Go tooling pulls the tip of the default branch, we can develop our initial code on the default branch tagging v0 minor and patch numbers as we go.</p>
+<h3 id="v1">
+  v1
+  <a class="anchor" href="#v1">#</a>
+</h3>
+<p>When we&rsquo;re ready to release v1, we create a v1 major branch, prepare the branch and create a semantic version tag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b v1
+$ git tag v1.0.0
+$ git push --tags origin v1
+</code></pre></div><p><em>We haven&rsquo;t altetered the module name with v1 as noted in <a href="#v1-no-prefix">the prelude</a>.</em></p>
+<p>Now we have a branch that we can apply backwards compatible changes to, we have our default branch representing the latest copy of our code and we haven&rsquo;t duplicated the source.</p>
+<h3 id="v2-and-beyond">
+  v2 and beyond
+  <a class="anchor" href="#v2-and-beyond">#</a>
+</h3>
+<p>The v2 release process is essentially the same as v1 except we must change the module name in our <code>go.mod</code> to include a <code>v2</code> suffix.</p>
+<pre><code>module github.com/chrisdoherty4/greeter/v2
+</code></pre><p>We can apply this change on the <code>v2</code> branch and then tag it as <code>v2.0.0</code>.</p>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+  <div><a class="flex align-center" href="https://github.com/chrisdoherty4/blog/commit/bb8996ffac257ec2b32bcf9a189f8a9b2eee0d66" title='Last modified by Chris Doherty | September 27, 2020' target="_blank" rel="noopener">
+      <img src="/svg/calendar.svg" class="book-icon" alt="Calendar" />
+      <span>September 27, 2020</span>
+    </a>
+  </div>
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#prelude-semantic-import-versioning">Prelude: Semantic Import Versioning</a></li>
+    <li><a href="#releasing-a-go-module-with-branches">Releasing a Go module with branches</a>
+      <ul>
+        <li><a href="#v0">v0</a></li>
+        <li><a href="#v1">v1</a></li>
+        <li><a href="#v2-and-beyond">v2 and beyond</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

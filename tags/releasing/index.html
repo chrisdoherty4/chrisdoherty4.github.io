@@ -5,17 +5,17 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="c&#43;&#43;" />
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="releasing" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://chrisdoherty.io/tags/c&#43;&#43;/" />
+<meta property="og:url" content="https://chrisdoherty.io/tags/releasing/" />
 <meta property="og:updated_time" content="2020-09-27T11:05:58-06:00" />
-<title>c&#43;&#43; | Chris Doherty</title>
+<title>releasing | Chris Doherty</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/book.min.6cd8553a6854f4812343f0f0c8baca31271e686434f381fbe3c7226f66639176.css" integrity="sha256-bNhVOmhU9IEjQ/DwyLrKMSceaGQ084H748cib2ZjkXY=">
 <script defer src="/en.search.min.4e4a981d709dc054cfeafe05e2f5a7079c29b0743fb4d9a472620585411bce35.js" integrity="sha256-TkqYHXCdwFTP6v4F4vWnB5wpsHQ/tNmkcmIFhUEbzjU="></script>
-<link rel="alternate" type="application/rss+xml" href="https://chrisdoherty.io/tags/c++/index.xml" title="Chris Doherty" />
+<link rel="alternate" type="application/rss+xml" href="https://chrisdoherty.io/tags/releasing/index.xml" title="Chris Doherty" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -115,7 +115,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <strong>c&#43;&#43;</strong>
+  <strong>releasing</strong>
 
   <label for="toc-control">
     
@@ -203,35 +203,27 @@ https://github.com/alex-shpak/hugo-book
   
   <article class="markdown book-post">
     <h2>
-      <a href="/2020/06/unsigned-integers/">Unsigned Integers</a>
+      <a href="/2020/09/releasing-go-modules/">Releasing Go Modules</a>
     </h2>
     
-  <h5>June 24, 2020</h5>
+  <h5>September 27, 2020</h5>
 
 
 
-  
-  <div>
-    
-      <a href="/categories/programming/">Programming</a>
-  </div>
   
 
   
   <div>
     
-      <a href="/tags/c/">c</a>, 
-      <a href="/tags/c&#43;&#43;/">c&#43;&#43;</a>, 
-      <a href="/tags/programming/">programming</a>
+      <a href="/tags/go/">go</a>, 
+      <a href="/tags/releasing/">releasing</a>
   </div>
   
 
 
-    <p>Using an unsigned instead of an int to gain one more bit to represent positive integers is almost never a good idea
- - Bjarne Stroustrup
-Default representation #  It&rsquo;s natural to think of integers in terms of signed types because they can represent negative values. In C/C++, integer literals, without any modifiers, are signed types.
-If done incorrectly, converting between signed and unsigned integers can be dangerous. Even when done correctly, if the program is working with a value that can&rsquo;t be represented within the bounds of the target signedness the program experiences an error and that error must be dealt with.
-        <a href="/2020/06/unsigned-integers/">...</a>
+    <p>There are 2 main methods for releasing Go modules: Copying all sources to a version directory in the root of the repository or creating a version branch. I don&rsquo;t like copying my full source to a subdirectory so I&rsquo;m focusing this article on creating a version branch which is a common approach for releasing software.
+Prelude: Semantic Import Versioning #  Go uses semantic versioning (semver) for dependency management. Additionally, Go has a simple rule when importing packages.
+        <a href="/2020/09/releasing-go-modules/">...</a>
       
     </p>
   </article>

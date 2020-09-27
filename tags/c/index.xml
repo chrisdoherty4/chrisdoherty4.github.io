@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Jun 2020 17:39:28 -0600</lastBuildDate><atom:link href="https://chrisdoherty.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Unsigned</title>
-      <link>https://chrisdoherty.io/2020/06/unsigned/</link>
+      <title>Unsigned Integers</title>
+      <link>https://chrisdoherty.io/2020/06/unsigned-integers/</link>
       <pubDate>Wed, 24 Jun 2020 17:39:28 -0600</pubDate>
       
-      <guid>https://chrisdoherty.io/2020/06/unsigned/</guid>
+      <guid>https://chrisdoherty.io/2020/06/unsigned-integers/</guid>
       <description>Using an unsigned instead of an int to gain one more bit to represent positive integers is almost never a good idea
  - Bjarne Stroustrup
 Default representation #  It&amp;rsquo;s natural to think of integers in terms of signed types because they can represent negative values. In C/C++, integer literals, without any modifiers, are signed types.
